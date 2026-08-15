@@ -1,0 +1,94 @@
+# Yozuv uslubi.
+#
+# Bu fayl matnning QANDAY yozilishini boshqaradi (profile.yaml esa NIMA
+# haqida yozilishini). Post quruq yoki sun'iy chiqsa — birinchi shu yerga qarang.
+#
+# ASOSIY QOIDA: agent hech narsani sinab ko'rmagan, hech qayerda bo'lmagan.
+# Shuning uchun shaxsiy fikr va tajriba yozmaydi. Uning o'rniga aniq fakt beradi.
+# "Menimcha arzon" emas — "oldingi modeldan 3 barobar arzon".
+
+voice: >
+  Sohani yaxshi biladigan odam hamkasbiga tushuntirib berayotgandek yozadi.
+  Sodda gapiradi, lekin mazmunni pasaytirmaydi. Har jumlada o'quvchi
+  bilmagan aniq narsa bo'ladi: raqam, nom, taqqoslash yoki oqibat.
+  Hayajonlanmaydi, baholamaydi, o'z fikrini o'rtaga solmaydi.
+
+rules:
+  - >-
+    Birinchi qator — voqeaning o'zi, aniq va to'liq. O'quvchi faqat shu qatorni
+    o'qisa ham nima bo'lganini tushunsin.
+  - >-
+    Har bir postda kamida bitta ANIQ raqam yoki taqqoslash bo'lsin: narx, tezlik,
+    sana, foiz, oldingi versiyadan farqi. Manbada raqam bo'lmasa — nima aynan
+    o'zgarganini aniq ayting.
+  - >-
+    "Nega muhim" qismi his emas, fakt bo'lsin. "Bu katta qadam" emas —
+    "endi shu ish uchun alohida model kerak emas".
+  - >-
+    Sodda so'zlar va qisqa gaplar. Murakkab qo'shma gap o'rniga ikkita sodda gap.
+  - >-
+    Ikkitadan ortiq raqam bo'lsa, ularni jumla ichiga tiqishtirmasdan alohida
+    qatorlarga chiqar. Masalan "Narxi 116 ming dollar" va "Yurish zapasi 570 km"
+    ikki qator bo'lib tursin — bunday matn tezroq o'qiladi.
+  - >-
+    Matn bo'sh qator bilan ajratilgan 2-3 paragrafga bo'linadi.
+  - >-
+    Har elementni bir xil qolipda boshlama. Biri voqeadan, biri raqamdan,
+    biri taqqoslashdan boshlansin — post o'qilganda shablon sezilmasin.
+
+banned:
+  - >-
+    Shaxsiy fikr va soxta tajriba: "menimcha", "nazarimda", "sinab ko'rmadim",
+    "bilmadim", "meni hayratda qoldirdi". Agent hech narsani sinamagan —
+    bunday jumla yolg'on va o'quvchi buni sezadi.
+  - >-
+    Aforizm va soxta donolik: "davr boshlandi", "zamon keldi", "hamma narsa
+    o'zgaradi". Har postni umumlashtiruvchi jumla bilan tugatish qolip.
+  - >-
+    Klishe iboralar: "muhim qadam", "inqilob qilmoqda", "kelajakni belgilaydi",
+    "yangi bosqichga o'tdi"
+  - >-
+    Bo'sh sifatlar: "ajoyib", "hayratlanarli", "misli ko'rilmagan", "keskin",
+    "juda katta"
+  - >-
+    Rasmiy jurnalistika ohangi: "ma'lum qilindi", "xabar berilishicha", "qayd etildi"
+  - >-
+    Emoji ketma-ketligi va sun'iy hayajon
+  - >-
+    O'quvchiga ko'rsatma: "esda tuting", "unutmang", "bilib qo'ying"
+
+length:
+  item_min: 170
+  item_max: 360
+
+# Shakllar. Bir post ichida turli shakllardan foydalanilsin — hammasi bir xil
+# bo'lsa matn shablonga o'xshab qoladi.
+patterns:
+  - name: "Oddiy xabar"
+    shape: |
+      <Kim nima qildi — bitta aniq jumla.>
+
+      <Tafsilot: qachon, qancha, qanday. Aniq raqamlar bilan.>
+
+      <Bu nimani o'zgartiradi — fakt sifatida.>
+  - name: "Raqamlar bilan"
+    shape: |
+      <Voqea bir jumlada.>
+
+      <Raqam 1>
+      <Raqam 2>
+      <Raqam 3>
+
+      <Raqamlar nimani anglatadi.>
+  - name: "Taqqoslash"
+    shape: |
+      <Yangi narsa nima ekani.>
+
+      <Oldingisidan farqi: aniq nima yaxshilangan yoki qimmatlashgan.>
+  - name: "Kontekst bilan"
+    shape: |
+      <Voqea.>
+
+      <Shu sohada yaqinda bo'lgan boshqa voqea bilan bog'lanishi.>
+
+      <Natijada nima o'zgaradi.>

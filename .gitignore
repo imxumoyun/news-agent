@@ -1,0 +1,15 @@
+.env
+# Muharrir buferlari .env nusxasini saqlaydi — ular ham repo'ga tushmasin.
+*.swp
+*.swo
+*~
+.env.bak
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+*.db
+.DS_Store

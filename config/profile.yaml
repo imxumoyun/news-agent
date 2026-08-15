@@ -1,0 +1,32 @@
+# Qiziqish profili. Curator agenti aynan shunga qarab saralaydi.
+# Dayjest sifati yoqmasa — birinchi navbatda SHU FAYLNI o'zgartiring, kodni emas.
+
+audience: >
+  O'zbekistonlik dasturchi. AI va texnologiya sohasidagi jiddiy o'zgarishlarni
+  kuzatib boradi. Texnik atamalarni tushunadi, sodda tushuntirish kerak emas.
+
+interests:
+  high:
+    - Yangi model relizlari va ularning real imkoniyatlari (OpenAI, Anthropic, Google, Meta, Mistral, ochiq modellar)
+    - Chip va infratuzilma — NVIDIA, TSMC, data-markazlar, hisoblash quvvati iqtisodi
+    - Yirik investitsiya, sotib olish va kompaniya strategiyasi o'zgarishlari
+    - Dasturchilar uchun amaliy vositalar — API, agentlar, coding assistentlar
+    - AI qonunchiligi va tartibga solish (AQSh, YeI, Xitoy)
+  medium:
+    - Tadqiqot natijalari va yangi metodlar (agar amaliy ta'siri aniq bo'lsa)
+    - Yirik tech kompaniyalarning AI'dan tashqari muhim qarorlari
+    - Startaplar va yangi mahsulotlar (agar haqiqatan yangilik bo'lsa)
+  low:
+    - Iste'molchi gadjetlari, telefon relizlari
+    - Kripto (AI bilan bog'liq bo'lmasa)
+
+exclude:
+  - Tasdiqlanmagan mish-mishlar va "manbalarga ko'ra" darajasidagi xabarlar
+  - Clickbait sarlavhalar, "AI hammasini o'zgartiradi" tipidagi umumiy maqolalar
+  - Reklama xarakteridagi mahsulot e'lonlari, homiylik kontenti
+  - Bir voqeaning takroriy sharhlari (asl xabar allaqachon tanlangan bo'lsa)
+  - Ro'yxat maqolalari ("10 ta eng yaxshi AI vosita")
+
+# Bir postda nechta voqea bo'lsin
+max_items: 11
+min_items: 5

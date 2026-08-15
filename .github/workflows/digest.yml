@@ -1,0 +1,88 @@
+name: Kunlik dayjest
+
+on:
+  schedule:
+    # GitHub Actions UTC bilan ishlaydi. Toshkent = UTC+5.
+    - cron: "0 3 * * *"    # 08:00 Toshkent
+    - cron: "0 15 * * *"   # 20:00 Toshkent
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Hech qayerga yubormasdan sinash"
+        type: boolean
+        default: false
+      instagram:
+        description: "Instagram'ga ham joylash"
+        type: boolean
+        default: true
+      hours:
+        description: "Necha soatlik yangilik olinsin"
+        type: string
+        default: ""
+
+# Ikki yugurish bir vaqtda ishlab, holat faylini buzmasligi uchun.
+concurrency:
+  group: digest
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # To'liq tarix kerak: oxirida `git pull --rebase` qilamiz, shallow
+          # klonda esa rebase merge-base topolmay yiqiladi.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Kutubxonalarni o'rnatish
+        run: |
+          pip install --quiet -r requirements.txt
+          pip install --quiet -e .
+
+      - name: Dayjestni tayyorlash va yuborish
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          INSTAGRAM_ACCESS_TOKEN: ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_USER_ID: ${{ secrets.INSTAGRAM_USER_ID }}
+          ASSETS_REPO: ${{ github.repository }}
+          ASSETS_BRANCH: ${{ github.ref_name }}
+        run: |
+          # Instagram rasmlarni repo'ga commit qiladi — git kimligi kerak.
+          git config user.name "news-agent"
+          git config user.email "actions@github.com"
+
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ inputs.hours }}" ]; then ARGS="$ARGS --hours ${{ inputs.hours }}"; fi
+          # Jadval bo'yicha yugurganda inputs bo'sh bo'ladi — Instagram yoqiq.
+          if [ "${{ inputs.instagram }}" != "false" ]; then ARGS="$ARGS --instagram"; fi
+          python -m news_agent run $ARGS
+
+      # MUHIM: runner har safar toza boshlanadi. Bu qadam bo'lmasa, ertalab
+      # chiqqan yangilik kechqurun qayta chiqadi.
+      - name: Holatni saqlash
+        if: success() && inputs.dry_run != true
+        run: |
+          git config user.name "news-agent"
+          git config user.email "actions@github.com"
+          git add state/ digests/ assets/cards
+          if git diff --staged --quiet; then
+            echo "O'zgarish yo'q."
+          else
+            git commit -m "dayjest: $(date -u +%Y-%m-%d\ %H:%M) UTC"
+            git pull --rebase --autostash origin ${{ github.ref_name }}
+            git push
+          fi

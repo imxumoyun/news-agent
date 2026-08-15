@@ -1,0 +1,129 @@
+# RSS manbalar.
+# weight — Curator uchun manba ishonchliligi (0.0-1.0). Birlamchi bloglar eng yuqori.
+# Yangi manba qo'shgandan keyin: python -m news_agent sources-check
+
+sources:
+  # ---- Agregatorlar ----
+  - name: Techmeme
+    url: https://www.techmeme.com/feed.xml
+    category: aggregator
+    weight: 0.85
+  - name: Hacker News (200+ ball)
+    url: https://hnrss.org/frontpage?points=200
+    category: aggregator
+    weight: 0.8
+
+  # ---- Birlamchi manbalar: AI kompaniyalari ----
+  - name: OpenAI
+    url: https://openai.com/news/rss.xml
+    category: primary
+    weight: 1.0
+  # Anthropic'da ochiq RSS yo'q — Google News uning saytini indekslaydi.
+  - name: Anthropic
+    url: https://news.google.com/rss/search?q=when:2d+site:anthropic.com&hl=en-US&gl=US&ceid=US:en
+    category: primary
+    weight: 1.0
+  - name: Google DeepMind
+    url: https://deepmind.google/blog/rss.xml
+    category: primary
+    weight: 1.0
+  - name: Google AI blog
+    url: https://blog.google/technology/ai/rss/
+    category: primary
+    weight: 0.95
+  # ai.meta.com/blog RSS'ni yopgan; Meta Engineering blogi ishlaydi va
+  # AI infratuzilmasi haqidagi eng qiziq postlar aynan o'sha yerda.
+  - name: Meta Engineering
+    url: https://engineering.fb.com/feed/
+    category: primary
+    weight: 0.9
+  - name: NVIDIA
+    url: https://blogs.nvidia.com/feed/
+    category: primary
+    weight: 0.9
+  - name: Hugging Face
+    url: https://huggingface.co/blog/feed.xml
+    category: primary
+    weight: 0.9
+  - name: Mistral AI
+    url: https://mistral.ai/rss.xml
+    category: primary
+    weight: 0.85
+  # blogs.microsoft.com/ai o'chirilgan (HTTP 410) — Microsoft Research bilan almashtirildi.
+  - name: Microsoft Research
+    url: https://www.microsoft.com/en-us/research/feed/
+    category: primary
+    weight: 0.8
+  - name: AWS Machine Learning
+    url: https://aws.amazon.com/blogs/machine-learning/feed/
+    category: primary
+    weight: 0.75
+
+  # ---- Tech media ----
+  - name: TechCrunch
+    url: https://techcrunch.com/feed/
+    category: media
+    weight: 0.75
+  - name: The Verge
+    url: https://www.theverge.com/rss/index.xml
+    category: media
+    weight: 0.7
+  - name: Ars Technica
+    url: https://feeds.arstechnica.com/arstechnica/index
+    category: media
+    weight: 0.8
+  - name: VentureBeat AI
+    url: https://venturebeat.com/category/ai/feed/
+    category: media
+    weight: 0.7
+  - name: Wired
+    url: https://www.wired.com/feed/rss
+    category: media
+    weight: 0.7
+  - name: MIT Technology Review
+    url: https://www.technologyreview.com/feed/
+    category: media
+    weight: 0.8
+
+  # ---- Chuqur tahlil ----
+  - name: SemiAnalysis
+    url: https://semianalysis.com/feed/
+    category: analysis
+    weight: 0.95
+  - name: Import AI
+    url: https://importai.substack.com/feed
+    category: analysis
+    weight: 0.9
+  # The Batch (deeplearning.ai) ochiq RSS bermaydi — email obunasi orqali o'qiladi.
+  - name: Interconnects
+    url: https://www.interconnects.ai/feed
+    category: analysis
+    weight: 0.85
+  - name: Simon Willison
+    url: https://simonwillison.net/atom/everything/
+    category: analysis
+    weight: 0.8
+
+  # ---- Jamoa ----
+  # Reddit server IP'laridan kelgan so'rovlarni 403 bilan rad etadi (GitHub
+  # Actions'da ham shunday bo'ladi). Kerak bo'lsa Reddit API kaliti bilan
+  # qayta ulash mumkin — hozircha o'chirib qo'yildi.
+  # - name: r/LocalLLaMA
+  #   url: https://www.reddit.com/r/LocalLLaMA/top/.rss?t=day
+  #   category: community
+  #   weight: 0.6
+
+  # ---- Biznes / moliya (Google News orqali, ular ochiq RSS'ni yopgan) ----
+  # DIQQAT: so'rov to'liq URL-kodlangan bo'lishi shart. Kodlanmagan qavs va
+  # probel bo'lsa Google filtrni butunlay e'tiborsiz qoldiradi va saytning
+  # hamma yangiligini qaytaradi (moliya, sport, hammasi).
+  - name: Reuters Tech (Google News)
+    url: https://news.google.com/rss/search?q=%28AI%20OR%20semiconductor%20OR%20chips%29%20site%3Areuters.com%20when%3A2d&hl=en-US&gl=US&ceid=US:en
+    category: business
+    weight: 0.85
+    max_items: 20
+  - name: Bloomberg Tech (Google News)
+    url: https://news.google.com/rss/search?q=%28AI%20OR%20semiconductor%20OR%20chips%29%20site%3Abloomberg.com%20when%3A2d&hl=en-US&gl=US&ceid=US:en
+    category: business
+    weight: 0.85
+    max_items: 20
